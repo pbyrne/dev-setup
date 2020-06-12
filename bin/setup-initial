@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+ssh root@dev-box "adduser --disabled-password --gecos '' $USER"
+ssh root@dev-box "cp -r ~/.ssh /home/$USER/ && chown -R $USER:$USER /home/$USER/.ssh"
+ssh root@dev-box "echo '$USER ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/$USER"
+ssh root@dev-box "sed -i 's/^PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config"
+
